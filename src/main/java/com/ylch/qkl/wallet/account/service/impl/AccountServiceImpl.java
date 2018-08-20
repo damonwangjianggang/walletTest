@@ -18,21 +18,21 @@ public class AccountServiceImpl implements AccountService{
 	private AccountDao account;
 
 	@Override
-	public List<String> getAllAccounts() {
+	public List<String> getAllAccounts(String ip) {
 		
-		return account.getAccountlist();
+		return account.getAccountlist(ip);
 	}
 
 	@Override
-	public BigInteger getBalance(String accountId) {
+	public BigInteger getBalance(String accountId,String ip) {
 		
-		return account.getBalance(accountId.trim());
+		return account.getBalance(accountId.trim(),ip);
 	}
 
 	@Override
-	public String createAccount(String accountName,String password,AccountInfo accountInfo) {
+	public String createAccount(String accountName,String password,AccountInfo accountInfo,String ip) {
 		
-		return account.createAccount(accountName, password, accountInfo);
+		return account.createAccount(accountName, password, accountInfo,ip);
 	}
 
 	@Override

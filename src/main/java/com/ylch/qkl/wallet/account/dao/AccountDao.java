@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
@@ -21,10 +22,15 @@ import com.ylch.qkl.wallet.util.client.Web3JClient;
 
 @Component
 public class AccountDao {
-	
-    private static  Parity parity = ParityClient.getParity();
-    
-    private static Web3j web3j = Web3JClient.getClient();
+
+    @Autowired
+    private ParityClient parityClient;
+    @Autowired
+    private Web3JClient web3JClient;
+
+    private Parity parity;
+    private Web3j web3j;
+
  
     /**
      * Life
@@ -35,8 +41,8 @@ public class AccountDao {
      * @Author lzh
      *
      */
-    public List<String> getAccountlist(){
- 
+    public List<String> getAccountlist(String ip){
+        parity= parityClient.getParity(ip);
         try{
             return  parity.personalListAccounts().send().getAccountIds();
         }catch (Exception e){
@@ -45,8 +51,9 @@ public class AccountDao {
         return null;
     }
  
-    public String createAccount(String accountName,String password,AccountInfo accountInfo){
+    public String createAccount(String accountName,String password,AccountInfo accountInfo,String ip){
         try {
+            parity= parityClient.getParity(ip);
             NewAccountIdentifier newAccountIdentifier = parity.personalNewAccount(password).send();
             if(newAccountIdentifier!=null){
                 String accountId = newAccountIdentifier.getAccountId();
@@ -79,8 +86,10 @@ public class AccountDao {
         return null;
     }
  
-    public BigInteger getBalance(String accountId){
+    public BigInteger getBalance(String accountId,String ip){
         try {
+            parity= parityClient.getParity(ip);
+            web3j = web3JClient.getWeb3j(ip);
             DefaultBlockParameter defaultBlockParameter = new DefaultBlockParameterNumber(web3j.ethBlockNumber().send().getBlockNumber());
             
             EthGetBalance ethGetBalance =  parity.ethGetBalance(accountId,defaultBlockParameter).send();

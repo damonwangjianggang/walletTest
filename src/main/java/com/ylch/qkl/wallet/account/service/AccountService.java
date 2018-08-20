@@ -16,16 +16,16 @@ public interface AccountService {
 	 * 查询所有账户
 	 * @return
 	 */
-	public List<String> getAllAccounts();
+	public List<String> getAllAccounts(String ip);
 	/**
 	 * 查询账户余额 
 	 */ 
-  	public BigInteger getBalance(String accountId);
+  	public BigInteger getBalance(String accountId,String ip);
  
 	/**
 	 * 创建账户
 	 */
-	public String  createAccount(String accountName,String password,AccountInfo accountInfo);
+	public String  createAccount(String accountName,String password,AccountInfo accountInfo,String ip);
 	/**
 	 * 得到账户信息
 	 */

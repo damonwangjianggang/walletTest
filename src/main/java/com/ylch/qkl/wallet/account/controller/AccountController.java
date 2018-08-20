@@ -22,19 +22,19 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@PostMapping("/getAllAccounts")
-	public List<String> getAllAccounts() {
-		return accountService.getAllAccounts();
+	public List<String> getAllAccounts(@RequestBody RequestBodyBean request) {
+		return accountService.getAllAccounts(request.getIp());
 	}
 	@PostMapping("/getBalance")
 	public BigInteger getBalance(@RequestBody RequestBodyBean request) {
-		return accountService.getBalance(request.getAccountId());
+		return accountService.getBalance(request.getAccountId(),request.getIp());
 	}
 	
 	@PostMapping("/createAccount")
 	public  String createAccount(@RequestBody RequestBodyBean request) {
 		
 		AccountInfo accountInfo = new AccountInfo(request.getUserName(),request.getAddress(),request.getPhone(),request.getSchool());
-		return accountService.createAccount(request.getAccountName(), request.getPassword(), accountInfo);
+		return accountService.createAccount(request.getAccountName(), request.getPassword(), accountInfo,request.getIp());
 	}
 	
 	@PostMapping("/getAccountsInfo")

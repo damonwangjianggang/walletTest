@@ -1,7 +1,9 @@
 package com.ylch.qkl.wallet.trade.service;
 
-import java.math.BigDecimal;
+import org.springframework.stereotype.Service;
+import com.ylch.qkl.wallet.trade.bean.TransferInfoBean;
 
+@Service
 public interface TradeService {
 	/**
 	 * 交易
@@ -11,7 +13,7 @@ public interface TradeService {
 	 * @param amount
 	 * @return
 	 */
-	public String sendTrasfer(String accountId,String passsword,String toAccountId, String amount,String data);
+	public String sendTrasfer(String accountId,String passsword,String toAccountId, String amount,String data,String ip);
 	
 	
 	/**
@@ -19,6 +21,6 @@ public interface TradeService {
 	 * @param tranferHash
 	 * @return
 	 */
-	public String getTranferInfo(String tranferHash);
+	public TransferInfoBean getTranferInfo(String tranferHash,String ip);
 
 }
